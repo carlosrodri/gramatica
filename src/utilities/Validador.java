@@ -29,6 +29,7 @@ public class Validador {
 
 
 	public static void ObtenerProduccionesPorSimbolosNT(String producciones, NoTerminales noTerminales) {
+		//TO-DO  estamos en el segundo nivel, falta agregar 3 niveles mas
 		String[] partes = producciones.split(",");
 		for (int i = 0; i < partes.length; i++) {
 			if (noTerminales.getSimbolo().equals(partes[i].substring(0,1))) {
