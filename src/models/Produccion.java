@@ -15,7 +15,6 @@ public class Produccion {
 	}
 	
 	public boolean validarProduccion() {
-		System.out.println(cuerpo + " cuerpo de la produccion");
 		return Validador.validarProduccion(noTerminales.getSimbolo()+igualador+cuerpo);
 	}
 	

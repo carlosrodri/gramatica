@@ -61,4 +61,7 @@ public class Gramatica {
 		return terminales;
 	}
 
+	public ArrayList<Produccion> getProducciones() {
+		return producciones;
+	}
 }

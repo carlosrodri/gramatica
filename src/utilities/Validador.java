@@ -12,10 +12,8 @@ public class Validador {
 	public static boolean validarProduccion(CharSequence entrada) {
 		boolean opcion = false;
 		Pattern pattern = Pattern.compile(expresionProduccion);
-		System.out.println(entrada + "    produccion");
 		String[] partes = String.valueOf(entrada).split(",");
 		for (int i = 0; i < partes.length; i++) {
-			System.out.println(partes[i] + "   cada produccion");
 			opcion = Pattern.matches(pattern.toString(), partes[i]);
 		}
 		return opcion;

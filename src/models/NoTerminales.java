@@ -24,11 +24,18 @@ public class NoTerminales {
 	}
 
 	public void agregarCuerpo(String cuerpo) {
-		this.cuerpo.add(cuerpo);
+		if (cuerpo.contains("|")) {
+			String[] p = cuerpo.split("\\|");
+			for (int i = 0; i < p.length; i++) {
+				this.cuerpo.add(p[i]);
+			}
+		} else {
+			this.cuerpo.add(cuerpo);
+		}
 	}
 
 	public ArrayList<String> getCuerpo() {
-		return cuerpo;
+		return this.cuerpo;
 	}
 
 	@Override
