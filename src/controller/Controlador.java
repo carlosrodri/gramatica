@@ -4,14 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.text.Utilities;
-
 import models.Gramatica;
 import models.NoTerminales;
-import models.Palabra;
 import utilities.Validador;
 import views.PanelDrawing;
 import views.VentanaPrincipal;
@@ -19,21 +15,12 @@ import views.VentanaPrincipal;
 public class Controlador implements ActionListener{
 
 	private Gramatica gramatica;
-	private Palabra palabra;
 	private VentanaPrincipal ventanaPrincipal;
 	private PanelDrawing panelDrawing;
 	private JDialog dialogPaint;
 
 	public Controlador() {
 		ventanaPrincipal = new VentanaPrincipal(this);
-		//		
-		//		String p = "vdxfgbhdf|";
-		//		
-		//		if (p.contains("|")) {
-		//			System.out.println("lotinwee");
-		//		} else {
-		//			System.out.println("nel ");
-		//		}
 	}
 
 	@Override
@@ -56,7 +43,7 @@ public class Controlador implements ActionListener{
 							ventanaPrincipal.ocultarDialogoNuevaGramatica(false);
 						}
 				for (NoTerminales noTerminales : gramatica.getNoTerminales()) {
-					Validador.ObtenerProduccionesPorSimbolosNT(ventanaPrincipal.obtenerProducciones(), noTerminales);
+					Validador.ObtenerProduccionesPorSimbolosNT(ventanaPrincipal.obtenerProducciones(), noTerminales, "");
 					panelDrawing = new PanelDrawing(ventanaPrincipal.obtenerProducciones());
 				}
 			} catch (Exception e1) {
@@ -71,7 +58,7 @@ public class Controlador implements ActionListener{
 		dialogPaint = new JDialog();
 		dialogPaint.setLayout(new BorderLayout());
 		dialogPaint.add(panelDrawing, BorderLayout.CENTER);
-		dialogPaint.setSize(new Dimension(500, 500));
+		dialogPaint.setSize(new Dimension(800, 800));
 		dialogPaint.setLocationRelativeTo(null);
 		panelDrawing.setGramatica(gramatica);
 		dialogPaint.setVisible(true);

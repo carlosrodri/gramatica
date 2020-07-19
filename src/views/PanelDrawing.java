@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 
 import models.Gramatica;
 import models.NoTerminales;
-import models.Produccion;
 import utilities.Validador;
 
 public class PanelDrawing extends JPanel{
@@ -34,7 +33,7 @@ public class PanelDrawing extends JPanel{
 		try {
 			ArrayList<NoTerminales> n = new ArrayList<>();
 			n.add(gramatica.getNoTerminales().get(0));
-			pintarGramatica(n, x, y, 0);
+			pintarGramatica(n, y, 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,27 +48,29 @@ public class PanelDrawing extends JPanel{
 		g.drawOval(x, 20 , DIAMETRO, y);
 		g.drawString(gramatica.getNoTerminales().get(0).getSimbolo(), getWidth()/2, y);
 	}
-	
+
 	public void setProduccionesSinFiltrar(String produccionesSinFiltrar) {
 		this.produccionesSinFiltrar = produccionesSinFiltrar;
 	}
 
-	public void pintarGramatica(ArrayList<NoTerminales> noTerminales, int x, int y, int iteracion) throws Exception {
-		y += 50;
+	public void pintarGramatica(ArrayList<NoTerminales> noTerminales, int y, int iteracion) throws Exception {
+		int x = (getWidth()/noTerminales.size())/(noTerminales.size()*4);
+		int xStep = getWidth()/(noTerminales.size()*2);
 		if (iteracion < 5) {
 			ArrayList<NoTerminales> noTerminalesPorNivel = new ArrayList<>();
-				for (NoTerminales not : noTerminales) {
-					for (String cuerpo : not.getCuerpo()) {
-						NoTerminales n = new NoTerminales(cuerpo.substring(cuerpo.length()-1, cuerpo.length()));
-						Validador.ObtenerProduccionesPorSimbolosNT(produccionesSinFiltrar, n);
-						noTerminalesPorNivel.add(n);
-						g.drawString(cuerpo, x, y);
-						x += DIAMETRO;
-					}
-					iteracion+=1;
-					pintarGramatica(noTerminalesPorNivel, getWidth()/noTerminalesPorNivel.size(), y, iteracion);
+			y += 50;
+			for (NoTerminales not : noTerminales) {
+				for (String cuerpo : not.getCuerpo()) {
+					g.drawString(cuerpo, x, y);
+					NoTerminales n = new NoTerminales(cuerpo.substring(cuerpo.length()-1, cuerpo.length()));
+					Validador.ObtenerProduccionesPorSimbolosNT(produccionesSinFiltrar, n, cuerpo.substring(0, cuerpo.length()-1));
+					noTerminalesPorNivel.add(n);
+					x += (xStep+(DIAMETRO/2));
 				}
 			}
-			setVisible(true);
+			iteracion += 1;
+			pintarGramatica(noTerminalesPorNivel, y, iteracion);
+		}
+		setVisible(true);
 	}
 }

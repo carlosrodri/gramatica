@@ -1,10 +1,4 @@
-
-/models/
-/constants/
-/controller/
-/run/
-/utilities/
 /views/
-/img/
-/structures.class
-/structures/
+/models/
+/utilities/
+/controller/

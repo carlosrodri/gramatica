@@ -23,14 +23,14 @@ public class NoTerminales {
 		return simbolo;
 	}
 
-	public void agregarCuerpo(String cuerpo) {
+	public void agregarCuerpo(String cuerpo, String acarreo) {
 		if (cuerpo.contains("|")) {
 			String[] p = cuerpo.split("\\|");
 			for (int i = 0; i < p.length; i++) {
-				this.cuerpo.add(p[i]);
+				this.cuerpo.add(acarreo + p[i]);
 			}
 		} else {
-			this.cuerpo.add(cuerpo);
+			this.cuerpo.add(acarreo + cuerpo);
 		}
 	}
 

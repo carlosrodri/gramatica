@@ -26,12 +26,12 @@ public class Validador {
 	}
 
 
-	public static void ObtenerProduccionesPorSimbolosNT(String producciones, NoTerminales noTerminales) {
+	public static void ObtenerProduccionesPorSimbolosNT(String producciones, NoTerminales noTerminales, String acarreo) {
 		//TO-DO  estamos en el segundo nivel, falta agregar 3 niveles mas
 		String[] partes = producciones.split(",");
 		for (int i = 0; i < partes.length; i++) {
 			if (noTerminales.getSimbolo().equals(partes[i].substring(0,1))) {
-				noTerminales.agregarCuerpo(obtenerCuerpo(partes[i]));
+				noTerminales.agregarCuerpo(obtenerCuerpo(partes[i]), acarreo);
 			}
 		}
 	}
@@ -41,7 +41,7 @@ public class Validador {
 		String[] partes = string.split("=");
 		return partes[1];
 	}
-	
+
 //	public static void main(String[] args) {
 //		System.out.println(Validador.ValidarPalabra("sdzafsdg"));
 //	}
