@@ -17,8 +17,10 @@ public class PanelDrawing extends JPanel{
 	private Graphics g;
 	private Gramatica gramatica;
 	private String produccionesSinFiltrar;
+	private ArrayList<String> palabras;
 
 	public PanelDrawing(String produccionesSinFiltrar) {
+		this.palabras = new ArrayList<>();
 		this.produccionesSinFiltrar = produccionesSinFiltrar;
 		setSize(new Dimension(500, 500));
 	}
@@ -53,6 +55,13 @@ public class PanelDrawing extends JPanel{
 		this.produccionesSinFiltrar = produccionesSinFiltrar;
 	}
 
+	/**
+	 * Método recursivo para pintar las producciones correspondientes a cada nivel
+	 * @param noTerminales el array de simbolos no terminales correspondientes al nivel de la iteracion
+	 * @param y posicion en y del nivel
+	 * @param iteracion numero dl nivel en el que se encuantra pintando
+	 * @throws Exception
+	 */
 	public void pintarGramatica(ArrayList<NoTerminales> noTerminales, int y, int iteracion) throws Exception {
 		int x = (getWidth()/noTerminales.size())/(noTerminales.size()*4);
 		int xStep = getWidth()/(noTerminales.size()*2);
@@ -61,13 +70,14 @@ public class PanelDrawing extends JPanel{
 			y += 50;
 			for (NoTerminales not : noTerminales) {
 				for (String cuerpo : not.getCuerpo()) {
+					this.palabras.add(cuerpo);
 					g.drawOval(x-2, y-(DIAMETRO/2) , DIAMETRO, DIAMETRO);
 					g.drawString(cuerpo, x, y);
 					String simboloTerminal = cuerpo.substring(cuerpo.length()-1, cuerpo.length());
 					if(simboloTerminal.codePointAt(0) >= 65 && simboloTerminal.codePointAt(0) <= 90 ) {
-					NoTerminales n = new NoTerminales(cuerpo.substring(cuerpo.length()-1, cuerpo.length()));
-					Validador.ObtenerProduccionesPorSimbolosNT(produccionesSinFiltrar, n, cuerpo.substring(0, cuerpo.length()-1));
-					noTerminalesPorNivel.add(n);
+						NoTerminales n = new NoTerminales(cuerpo.substring(cuerpo.length()-1, cuerpo.length()));
+						Validador.ObtenerProduccionesPorSimbolosNT(produccionesSinFiltrar, n, cuerpo.substring(0, cuerpo.length()-1));
+						noTerminalesPorNivel.add(n);
 					}
 					x += (xStep+(DIAMETRO/2));
 				}
@@ -76,5 +86,20 @@ public class PanelDrawing extends JPanel{
 			pintarGramatica(noTerminalesPorNivel, y, iteracion);
 		}
 		setVisible(true);
+	}
+
+	/**
+	 * La gramatica valida que la palabra pertenezca a ella
+	 * @param palabra
+	 * @return
+	 */
+	public boolean validarPalabra(String palabra){
+		boolean valida = false;
+		for (String string : palabras) {
+			if (string.equals(palabra)) {
+				valida = true;
+			}
+		}
+		return valida;
 	}
 }

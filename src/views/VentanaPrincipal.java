@@ -81,4 +81,8 @@ public class VentanaPrincipal extends JFrame{
 	public String obtenerProducciones() throws Exception {
 		return dialogoNuevaGramatica.obtenerProducciones();
 	}
+	
+	public String obternerPalabra() throws Exception {
+		return dialogoValidarPalabra.obtenerPalabra();
+	}
 }

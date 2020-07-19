@@ -30,38 +30,57 @@ public class Controlador implements ActionListener{
 			ventanaPrincipal.ocultarDialogoNuevaGramatica(true);
 			break;
 		case GRAFICAR_ARBOL:
-			pintarArbol();
+			pintarArbol(true);
 			break;
 		case VALIDAR_PALABRA:
 			ventanaPrincipal.ocultarDialogoValidarPalabra(true);
 			break;
 		case GENERAR_GRAMATICA:
-			try {
-				gramatica = new Gramatica(ventanaPrincipal.obtenerTerminales(), ventanaPrincipal.obtenerNoTerminales());
-						if(gramatica.agregarProducciones(ventanaPrincipal.obtenerProducciones())) {
-							JOptionPane.showMessageDialog(null, "Gramática Correcta");
-							ventanaPrincipal.ocultarDialogoNuevaGramatica(false);
-						}
-				for (NoTerminales noTerminales : gramatica.getNoTerminales()) {
-					Validador.ObtenerProduccionesPorSimbolosNT(ventanaPrincipal.obtenerProducciones(), noTerminales, "");
-					panelDrawing = new PanelDrawing(ventanaPrincipal.obtenerProducciones());
-				}
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
+			generarGramatica();
+			break;
 		case VALIDAR_PALABRA_OK:
+			validarPalabra();
 			break;
 		}
 	}
 
-	private void pintarArbol() {
+	private void validarPalabra() {
+		pintarArbol(true);
+		try {
+			if (panelDrawing.validarPalabra(ventanaPrincipal.obternerPalabra())) {
+				JOptionPane.showMessageDialog(null, "La palabra está validada por la gramática" );
+			} else {
+				JOptionPane.showMessageDialog(null, "La palabra NO está validada por la gramática" );
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	private void generarGramatica() {
+		try {
+			gramatica = new Gramatica(ventanaPrincipal.obtenerTerminales(), ventanaPrincipal.obtenerNoTerminales());
+			if(gramatica.agregarProducciones(ventanaPrincipal.obtenerProducciones())) {
+				JOptionPane.showMessageDialog(null, "Gramática Correcta");
+				ventanaPrincipal.ocultarDialogoNuevaGramatica(false);
+			}
+			for (NoTerminales noTerminales : gramatica.getNoTerminales()) {
+				Validador.ObtenerProduccionesPorSimbolosNT(ventanaPrincipal.obtenerProducciones(), noTerminales, "");
+			}
+			panelDrawing = new PanelDrawing(ventanaPrincipal.obtenerProducciones());
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+	}
+
+	private void pintarArbol(boolean show) {
 		dialogPaint = new JDialog();
 		dialogPaint.setLayout(new BorderLayout());
 		dialogPaint.add(panelDrawing, BorderLayout.CENTER);
 		dialogPaint.setSize(new Dimension(800, 800));
 		dialogPaint.setLocationRelativeTo(null);
 		panelDrawing.setGramatica(gramatica);
-		dialogPaint.setVisible(true);
+		dialogPaint.setVisible(show);
 	}
 
 }
