@@ -61,10 +61,14 @@ public class PanelDrawing extends JPanel{
 			y += 50;
 			for (NoTerminales not : noTerminales) {
 				for (String cuerpo : not.getCuerpo()) {
+					g.drawOval(x-2, y-(DIAMETRO/2) , DIAMETRO, DIAMETRO);
 					g.drawString(cuerpo, x, y);
+					String simboloTerminal = cuerpo.substring(cuerpo.length()-1, cuerpo.length());
+					if(simboloTerminal.codePointAt(0) >= 65 && simboloTerminal.codePointAt(0) <= 90 ) {
 					NoTerminales n = new NoTerminales(cuerpo.substring(cuerpo.length()-1, cuerpo.length()));
 					Validador.ObtenerProduccionesPorSimbolosNT(produccionesSinFiltrar, n, cuerpo.substring(0, cuerpo.length()-1));
 					noTerminalesPorNivel.add(n);
+					}
 					x += (xStep+(DIAMETRO/2));
 				}
 			}
