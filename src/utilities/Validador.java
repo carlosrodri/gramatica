@@ -8,6 +8,7 @@ public class Validador {
 	private static String expresionProduccion = "^[A-Z][=]{1}[\\w]*[[|][\\w]]*|^[A-Z][=]{1}[\\w]*";
 	private static String expresionPralabra = "[\\w][^A-Z]*|[\\w]*";
 	
+	
 	public static boolean validarProduccion(CharSequence entrada) {
 		boolean opcion = false;
 		Pattern pattern = Pattern.compile(expresionProduccion);
